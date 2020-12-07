@@ -1,0 +1,50 @@
+/* CSS Document */
+
+textarea {
+    width: 280px;
+    height: 150px;
+}
+
+.main {
+    position: relative;
+    line-height: 20px;
+}
+
+form {
+    margin: 20px;
+    padding: 10px 25px;
+    border: 1px solid #c4c4c4;
+    width: 300px;
+    height: auto;
+    border-radius: 5px;
+}
+
+form::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.but {
+    margin-right: 15px;
+    margin-top: 10px;
+    float: right;
+}
+
+.status {
+    display: inline-block;
+    color: red;
+    transition-property: opacity;
+    transition-duration: 500ms;
+    transition-timing-function: ease-in-out;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 12px;
+    margin-top: 10px;
+}
+.status_show {
+    opacity: 1;
+}
+
+.status_hide {
+    opacity: 0;
+}

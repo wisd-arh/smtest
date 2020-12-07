@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <link href="./styles.css" rel="stylesheet" />
+    <script src="./site_scripts.js"></script>
+
+    <title>SM test.</title>
+
+    <script type="text/javascript">
+        function send() {
+            let fio = document.getElementById("fio").value; 
+            let email = document.getElementById("email").value; 
+            let message = document.getElementById("message").value; 
+
+
+            //xmlhttp = new XMLHttpRequest();
+            xmlhttp = getXmlHttp();
+            if (xmlhttp) {
+                xmlhttp.open('POST', './enj.php', true);
+                xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                xmlhttp.send("user=" + encodeURIComponent(fio) +
+                    "&email=" + encodeURIComponent(email) +
+                    "&message=" + encodeURIComponent(message) +
+                    "&task=post");
+
+                xmlhttp.onreadystatechange = updatePage;
+            } 
+        }
+    </script>
+</head>
+
+<body>
+    <div class="main">
+        <form id="form1" name="form1" method="post" action="enj.php" accept-charset="UTF-8">
+            <label for="fio">ФИО</label><br><input id="fio" name="fio" type="text" value="Петр Иванов" required/><br>
+            <label for="email">Email</label><br><input id="email" name="email" type="email" value="sample@mail.ru" required/><br>
+            <label for="message">Текст сообщения</label><br><textarea id="message" name="message" cols="" rows="">Ждём ответа от сервера</textarea><br>
+            <div id="status" class="status status_hide"></div>
+            <input class="but" name="" type="button" value="Отправить" onclick="send()" />
+    </div>
+    <div id="messages">
+
+    </div>
+    
+    </form>
+</body>
+
+</html>
