@@ -10,19 +10,13 @@ textarea {
     line-height: 20px;
 }
 
-form {
+.form {
     margin: 20px;
     padding: 10px 25px;
     border: 1px solid #c4c4c4;
     width: 300px;
     height: auto;
     border-radius: 5px;
-}
-
-form::after {
-    content: "";
-    clear: both;
-    display: table;
 }
 
 .but {
@@ -41,10 +35,68 @@ form::after {
     font-size: 12px;
     margin-top: 10px;
 }
+
 .status_show {
     opacity: 1;
 }
 
 .status_hide {
     opacity: 0;
+}
+
+.time {
+    border-bottom: 1px solid #c4c4c4;
+    float: left;
+    min-width: 80 px;
+    padding: 10px 5px;
+}
+
+.user {
+    border-bottom: 1px solid #c4c4c4;
+    min-width: 100px;
+    padding: 10px 5px;
+}
+
+.email {
+    border-bottom: 1px solid #c4c4c4;
+    float: left;
+    min-width: 80 px;
+    padding: 10px 5px;
+}
+
+.message {
+    width: 400px;
+    box-sizing: border-box;
+    /*    border: 1px solid black;*/
+    padding: 10px 5px;
+}
+
+.container {
+    width: 400px;
+    box-sizing: border-box;
+    border: 1px solid #c4c4c4;
+    border-radius: 5px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 12px;
+    margin: 10px;
+}
+
+.clearfix::after {
+    clear: both;
+    display: table;
+    content: "";
+}
+
+li {
+    list-style: none;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+}
+
+.messages {
+    margin: 20px;
+    padding: 0;
 }
