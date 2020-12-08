@@ -56,6 +56,7 @@ function updateMessagesProcess() {
             let response = JSON.parse(xmlhttp.responseText);
 
             message_list.innerHTML = "";
+            /* building message paragraph */
             response.forEach(function(item, i, response) {
                 let li = document.createElement("li");
                 let d = document.createElement("div");
