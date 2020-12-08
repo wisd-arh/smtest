@@ -3,6 +3,7 @@ include_once("pdo-debug.php");
 
 define("TASK_POST", "post");
 define("TASK_GET_ALL", "get");
+define("TASK_GET_LAST_ID", "last");
 
 class tTask
 {
@@ -27,16 +28,16 @@ class tTask
     );
 
     $sql = "INSERT INTO `messages` (`time`, `user`, `email`, `message`) VALUES (:p1, :p2, :p3, :p4)";
-    $stmt = $db->prepare($sql);
+    $sth = $db->prepare($sql);
     try {
-      $stmt->execute($parameters);
+      $sth->execute($parameters);
     } catch (PDOException $e) {
       echo 'Execute не удалось: ' . $e->getMessage();
     }
-    if ($stmt->rowCount() == 1) {
+    if ($sth->rowCount() == 1) {
       echo 'SUCCESS';
     }
-    $stmt = null;
+    $sth = null;
     $db = null;
   }
 
@@ -48,6 +49,24 @@ class tTask
     $results = $sth->fetchAll(PDO::FETCH_ASSOC);
     $json = json_encode($results);
     echo $json;
+
+    $sth = null;
+    $db = null;
+  }
+
+  private function getLastId() {
+    $db = new PDO('mysql:host=localhost;dbname=smtest;charset=UTF8;', 'root', '');
+    $sql = "SELECT `idmessages` FROM `messages` ORDER BY `idmessages` DESC LIMIT 1";
+    
+    $sth = $db->query($sql);
+
+    $results = $sth->fetch(PDO::FETCH_ASSOC);
+    if ($sth->rowCount() == 1) {
+      echo $results['idmessages'];
+    }  
+
+    $sth = null;
+    $db = null;
   }
 
   public function execute()
@@ -59,8 +78,8 @@ class tTask
       case TASK_GET_ALL:
         $this->getAllMessages();
         break;
-      case 2:
-        echo "i равно 2";
+      case TASK_GET_LAST_ID:
+        $this->getLastId();
         break;
     }
   }

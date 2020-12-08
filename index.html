@@ -10,40 +10,52 @@
 
     <script type="text/javascript">
         function send() {
-            let fio = document.getElementById("fio").value;
-            let email = document.getElementById("email").value;
-            let message = document.getElementById("message").value;
+            let fio = document.getElementById("fio");
+            let email = document.getElementById("email");
+            let message = document.getElementById("message");
 
-
-            //xmlhttp = new XMLHttpRequest();
             xmlhttp = getXmlHttp();
             if (xmlhttp) {
                 xmlhttp.open('POST', './enj.php', true);
                 xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                xmlhttp.send("user=" + encodeURIComponent(fio) +
-                    "&email=" + encodeURIComponent(email) +
-                    "&message=" + encodeURIComponent(message) +
+                xmlhttp.send("user=" + encodeURIComponent(fio.value) +
+                    "&email=" + encodeURIComponent(email.value) +
+                    "&message=" + encodeURIComponent(message.value) +
                     "&task=post");
 
                 xmlhttp.onreadystatechange = updatePage;
+                fio.value="";
+                email.value="";
+                message.value="";
             }
         }
 
-        setTimeout(function() {
+        function queryLastId() {
+            xmlhttp = getXmlHttp();
+            if (xmlhttp) {
+                xmlhttp.open('POST', './enj.php', true);
+                xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                xmlhttp.send("task=last");
+
+                xmlhttp.onreadystatechange = updateLastId;
+            } 
+        }    
+
+        function updateMessages() {
             xmlhttp = getXmlHttp();
             if (xmlhttp) {
                 xmlhttp.open('POST', './enj.php', true);
                 xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
                 xmlhttp.send("task=get");
 
-                xmlhttp.onreadystatechange = updateMessages;
-            }
-        }, 100);
+                xmlhttp.onreadystatechange = updateMessagesProcess;
+            } 
+        }    
 
-        document.ready(function(){  
-            show();  
-            setInterval('show()',500);  
-        });  
+        window.onload = function() {
+            queryLastId();
+            setInterval(queryLastId, 2000);  
+        }
     </script>
 </head>
 
@@ -55,6 +67,7 @@
             <label for="message">Текст сообщения</label><br><textarea id="message" name="message" cols="" rows="">Ждём ответа от сервера</textarea><br>
             <div id="status" class="status status_hide"></div>
             <input class="but" name="" type="button" value="Отправить" onclick="send()" />
+            <input id="last" name="last" type="text" value="" hidden>
         </form>
     </div>
     <div id="messages">

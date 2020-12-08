@@ -33,7 +33,7 @@ textarea {
     transition-timing-function: ease-in-out;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 12px;
-    margin-top: 10px;
+    margin-top: 8px;
 }
 
 .status_show {
@@ -47,7 +47,7 @@ textarea {
 .time {
     border-bottom: 1px solid #c4c4c4;
     float: left;
-    min-width: 80 px;
+    min-width: 80px;
     padding: 10px 5px;
 }
 
@@ -60,7 +60,7 @@ textarea {
 .email {
     border-bottom: 1px solid #c4c4c4;
     float: left;
-    min-width: 80 px;
+    min-width: 80px;
     padding: 10px 5px;
 }
 

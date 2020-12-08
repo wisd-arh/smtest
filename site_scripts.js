@@ -29,14 +29,15 @@ function updatePage() {
                 setTimeout(function() {
                     status.classList.toggle('status_hide');
                 }, 2000);
-                addMessage();
+                queryLastId();
+//                addMessage();
             } else {
                 document.getElementById("messages").innerHTML = response;
             }
         }
     }
 }
-
+/*
 function addMessage() {
     let message_list = document.getElementById("message_list");
 
@@ -47,13 +48,14 @@ function addMessage() {
     message_list.insertBefore(newMessage, message_list.firstChild);
 
 }
-
-function updateMessages() {
+*/
+function updateMessagesProcess() {
     if (xmlhttp.readyState == 4) {
         if (xmlhttp.status == 200) {
             let message_list = document.getElementById("message_list");
             let response = JSON.parse(xmlhttp.responseText);
 
+            message_list.innerHTML = "";
             response.forEach(function(item, i, response) {
                 let li = document.createElement("li");
                 let d = document.createElement("div");
@@ -78,8 +80,21 @@ function updateMessages() {
                 li.appendChild(d);
                 message_list.insertBefore(li, message_list.firstChild);
             });
+            
+        }
+    }
+}
 
-            //                d.textContent = res[0].idmessages; console.log(res); console.log(res[0]); console.log(res[0].idmessages); document.getElementById("messages").appendChild(d);
+function updateLastId() {
+    if (xmlhttp.readyState == 4) {
+        if (xmlhttp.status == 200) {
+            let last = document.getElementById("last");
+            let lastId = xmlhttp.responseText;
+
+            if (last.value != lastId) {
+                updateMessages();
+                last.value = lastId;
+            }
         }
     }
 }
