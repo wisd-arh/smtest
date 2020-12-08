@@ -29,6 +29,12 @@ function updatePage() {
                 case 'errname':
                     s = 'недопустимое имя';
                     break;
+                case 'erremail':
+                    s = 'недопустимый email';
+                    break;
+                case 'errmessage':
+                    s = 'введите сообщение';
+                    break;
                 default:
                     document.getElementById("messages").innerHTML = response;
             }

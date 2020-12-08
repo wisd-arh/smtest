@@ -49,12 +49,16 @@ textarea {
     float: left;
     min-width: 80px;
     padding: 10px 5px;
+    height: 20px;
+    background-color: rgb(255, 239, 210);
 }
 
 .user {
     border-bottom: 1px solid #c4c4c4;
     min-width: 100px;
     padding: 10px 5px;
+    background-color: rgb(255, 239, 210);
+    height: 20px;
 }
 
 .email {
@@ -62,6 +66,8 @@ textarea {
     float: left;
     min-width: 80px;
     padding: 10px 5px;
+    background-color: rgb(255, 239, 210);
+    height: 20px;
 }
 
 .message {
@@ -69,6 +75,7 @@ textarea {
     box-sizing: border-box;
     /*    border: 1px solid black;*/
     padding: 10px 5px;
+    background-color: rgb(210, 245, 255);
 }
 
 .container {
