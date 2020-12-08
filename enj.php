@@ -1,9 +1,16 @@
 <?php
-include_once("pdo-debug.php");
+//include_once("pdo-debug.php");
 
 define("TASK_POST", "post");
 define("TASK_GET_ALL", "get");
 define("TASK_GET_LAST_ID", "last");
+
+define("ERR_NAME", "errname");
+define("ERR_EMAIL", "erremail");
+define("ERR_MESSAGE", "errmessage");
+define("NO_ERR", "noerr");
+
+define("MIN_NAME_LENGTH", 3);
 
 class tTask
 {
@@ -16,9 +23,15 @@ class tTask
 
   private function postMessage()
   {
-    $db = new PDO('mysql:host=localhost;dbname=smtest;charset=UTF8;', 'root', '');
-
     $mess = new tMessage(new DateTime(), $_POST["user"], $_POST["email"], $_POST["message"]);
+
+    switch ($mess->testMessage()) {
+      case ERR_NAME: 
+        echo ERR_NAME;
+        return;
+    }
+
+    $db = new PDO('mysql:host=localhost;dbname=smtest;charset=UTF8;', 'root', '');
 
     $parameters = array(
       'p1' => $mess->time->format('Y-m-d H:i:s'),
@@ -98,6 +111,18 @@ class tMessage
     $this->user =  htmlspecialchars($user);
     $this->email =  htmlspecialchars($email);
     $this->message =  htmlspecialchars($message);
+  }
+
+  public function testMessage() {
+//    global $MIN_NAME_LENGTH;
+    
+    if (strlen($this->user) < MIN_NAME_LENGTH) {
+      return ERR_NAME;
+    }
+    
+    return NO_ERR;
+
+
   }
 
   public function mePrint()

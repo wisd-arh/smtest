@@ -21,22 +21,31 @@ function updatePage() {
     if (xmlhttp.readyState == 4) {
         if (xmlhttp.status == 200) {
             let response = xmlhttp.responseText;
-            if (response == 'SUCCESS') {
-                let status = document.getElementById("status");
-                status.innerHTML = 'успешно отправлено';
-                status.classList.toggle('status_hide');
-                status.classList.toggle('status_show');
-                setTimeout(function() {
-                    status.classList.toggle('status_hide');
-                }, 2000);
-                queryLastId();
-//                addMessage();
-            } else {
-                document.getElementById("messages").innerHTML = response;
+            let s = '';
+            switch (response) {
+                case 'SUCCESS':
+                    s = 'успешно отправлено';
+                    break;
+                case 'errname':
+                    s = 'недопустимое имя';
+                    break;
+                default:
+                    document.getElementById("messages").innerHTML = response;
             }
+
+            let status = document.getElementById("status");
+            status.innerHTML = s;
+            status.classList.toggle('status_hide');
+            status.classList.toggle('status_show');
+            setTimeout(function() {
+                status.classList.toggle('status_hide');
+            }, 2000);
+            queryLastId();
+            //                addMessage();
         }
     }
 }
+
 /*
 function addMessage() {
     let message_list = document.getElementById("message_list");
@@ -53,8 +62,12 @@ function updateMessagesProcess() {
     if (xmlhttp.readyState == 4) {
         if (xmlhttp.status == 200) {
             let message_list = document.getElementById("message_list");
-            let response = JSON.parse(xmlhttp.responseText);
-
+            let response = [];
+            try {
+                response = JSON.parse(xmlhttp.responseText);
+            } catch (e) {
+                console.log(xmlhttp.responseText);
+            }
             message_list.innerHTML = "";
             /* building message paragraph */
             response.forEach(function(item, i, response) {
@@ -81,7 +94,7 @@ function updateMessagesProcess() {
                 li.appendChild(d);
                 message_list.insertBefore(li, message_list.firstChild);
             });
-            
+
         }
     }
 }
