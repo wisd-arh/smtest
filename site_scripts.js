@@ -46,24 +46,12 @@ function updatePage() {
             setTimeout(function() {
                 status.classList.toggle('status_hide');
             }, 2000);
+
             queryLastId();
-            //                addMessage();
         }
     }
 }
 
-/*
-function addMessage() {
-    let message_list = document.getElementById("message_list");
-
-    let newMessage = document.createElement("li");
-    var now = new Date();
-    newMessage.textContent = now;
-
-    message_list.insertBefore(newMessage, message_list.firstChild);
-
-}
-*/
 function updateMessagesProcess() {
     if (xmlhttp.readyState == 4) {
         if (xmlhttp.status == 200) {
@@ -111,6 +99,7 @@ function updateLastId() {
             let last = document.getElementById("last");
             let lastId = xmlhttp.responseText;
 
+            /* New message in database */
             if (last.value != lastId) {
                 updateMessages();
                 last.value = lastId;
