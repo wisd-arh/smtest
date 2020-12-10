@@ -9,52 +9,120 @@
     <title>SM test.</title>
 
     <script type="text/javascript">
+        function status(response) {
+            if (response.status >= 200 && response.status < 300) {
+                return Promise.resolve(response)
+            } else {
+                return Promise.reject(new Error(response.statusText))
+            }
+        }
+
         function send() {
             let fio = document.getElementById("fio");
             let email = document.getElementById("email");
             let message = document.getElementById("message");
 
-            xmlhttp = getXmlHttp();
-            if (xmlhttp) {
-                xmlhttp.open('POST', './enj.php', true);
-                xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                xmlhttp.send("user=" + encodeURIComponent(fio.value) +
-                    "&email=" + encodeURIComponent(email.value) +
-                    "&message=" + encodeURIComponent(message.value) +
-                    "&task=post");
+            /*
+                        xmlhttp = getXmlHttp();
+                        if (xmlhttp) {
+                            xmlhttp.open('POST', './enj.php', true);
+                            xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                            xmlhttp.send("user=" + encodeURIComponent(fio.value) +
+                                "&email=" + encodeURIComponent(email.value) +
+                                "&message=" + encodeURIComponent(message.value) +
+                                "&task=post");
 
-                xmlhttp.onreadystatechange = updatePage;
-                fio.value="";
-                email.value="";
-                message.value="";
-            }
+                            xmlhttp.onreadystatechange = updatePage;
+                            fio.value="";
+                            email.value="";
+                            message.value="";
+                        }
+            */
+
+            fetch('./enj.php', {
+                    method: 'post',
+                    headers: {
+                        "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
+                    },
+                    body: "user=" + encodeURIComponent(fio.value) +
+                        "&email=" + encodeURIComponent(email.value) +
+                        "&message=" + encodeURIComponent(message.value) +
+                        "&task=post"
+                })
+                .then(status)
+                .then(function(response) {
+                    return response.text();
+                })
+                .then(function(data) {
+                    updatePageNew(data);
+                })
+                .catch(function(err) {
+                    console.log('Fetch Error :-S', err);
+                });
         }
 
         function queryLastId() {
-            xmlhttp = getXmlHttp();
-            if (xmlhttp) {
-                xmlhttp.open('POST', './enj.php', true);
-                xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                xmlhttp.send("task=last");
+            /*            xmlhttp = getXmlHttp();
+                        if (xmlhttp) {
+                            xmlhttp.open('POST', './enj.php', true);
+                            xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                            xmlhttp.send("task=last");
 
-                xmlhttp.onreadystatechange = updateLastId;
-            } 
-        }    
+                            xmlhttp.onreadystatechange = updateLastId;
+                        }
+            */
+            fetch('./enj.php', {
+                    method: 'post',
+                    headers: {
+                        "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
+                    },
+                    body: "task=last"
+                })
+                .then(status)
+                .then(function(response) {
+                    return response.text();
+                })
+                .then(function(data) {
+                    updateLastIdNew(data);
+                })
+                .catch(function(err) {
+                    console.log('Fetch Error :-S', err);
+                });
+        }
 
         function updateMessages() {
-            xmlhttp = getXmlHttp();
-            if (xmlhttp) {
-                xmlhttp.open('POST', './enj.php', true);
-                xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                xmlhttp.send("task=get");
+            /*            
+                        xmlhttp = getXmlHttp();
+                        if (xmlhttp) {
+                            xmlhttp.open('POST', './enj.php', true);
+                            xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                            xmlhttp.send("task=get");
 
-                xmlhttp.onreadystatechange = updateMessagesProcess;
-            } 
-        }    
+                            xmlhttp.onreadystatechange = updateMessagesProcess;
+                        }
+            */
+            fetch('./enj.php', {
+                    method: 'post',
+                    headers: {
+                        "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
+                    },
+                    body: "task=get"
+                })
+                .then(status)
+                .then(function(response) {
+                    return response.json();
+                })
+                .then(function(data) {
+                    updateMessagesProcessNew(data);
+                })
+                .catch(function(err) {
+                    console.log('Fetch Error :-S', err);
+                });
+        }
 
         window.onload = function() {
             queryLastId();
-            setInterval(queryLastId, 2000);  
+            setInterval(queryLastId, 2000);
         }
     </script>
 </head>
